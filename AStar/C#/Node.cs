@@ -24,9 +24,9 @@ namespace Pathfinding {
     /// <summary>
     /// This constructor ensures that the node always has a valid position and type.
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
+    /// <param name="type">The type of the Node.</param>
+    /// <param name="x">The X coordinate of the Node.</param>
+    /// <param name="y">The Y coordinate of the Node.</param>
     public Node(Types type, int x, int y){
       this.type = type;
       this.x = x;
