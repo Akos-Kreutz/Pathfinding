@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Pathfinding {
 
   /// <summary>
-  /// The Main Program Loop
+  /// The Main Program Loop.
   /// </summary>
   class Program {
     private static Board boardHandler; //Board instance
