@@ -14,7 +14,7 @@ namespace Pathfinding {
 
     public Node startingNode {get; private set;} //Reference for the starting node
     public Node  destinationNode {get; private set;} //Reference for the destination node
-    private Random rng = new Random();
+    private Random rng = new Random(); //The Random Number Generator used during the board creation.
 
     /// <summary>
     /// Instantiates the node matrix with the given dimensions, then fills it up with wall and floor nodes.
@@ -166,7 +166,7 @@ namespace Pathfinding {
     /// <summary>
     /// Iterates through the path and if the node type is floor marks it.
     /// </summary>
-    /// <param name="path"></param>
+    /// <param name="path">The path from start to destination.</param>
     /// <seealso cref="Board.SetPathNode(int, int)"/>
     public void MarkPath(Stack<Node> path){
       while(path.Count > 0){
@@ -182,7 +182,7 @@ namespace Pathfinding {
     /// <summary>
     /// Runs a 4 connected node search for the node and saves the neighbours to the list.
     /// </summary>
-    /// <param name="node"></param>
+    /// <param name="node">The node that stands in the middle point of the search.</param>
     /// <returns>
     /// A list of neighbours.
     /// </returns>

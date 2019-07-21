@@ -109,7 +109,7 @@ namespace Pathfinding {
     /// This is used to calculate the F value of a node by using the G value of another node.
     /// </summary>
     /// <param name="node">The node that used as a basis for the G value.</param>
-    /// <param name="gValue">The G value of another node</param>
+    /// <param name="gValue">The G value of another node.</param>
     /// <returns></returns>
     private int GetFValueWithG(Node node, int gValue) {
       return node.H + gValue;
@@ -118,7 +118,7 @@ namespace Pathfinding {
     /// <summary>
     /// Calculates the total cost of a node.
     /// </summary>
-    /// <param name="node"></param>
+    /// <param name="node">The node for which the value is calculated.</param>
     /// <returns>
     /// The sum of the G and H value.
     /// </returns>
