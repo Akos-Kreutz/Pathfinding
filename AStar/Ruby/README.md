@@ -5,9 +5,8 @@ The goal of this project was to create an easy to understand implementation of t
 To make the project more user friendly I created a simple CLI BoardGame in which you can try out the algorithm.
 
 ## Things that can be improved
-As the main focus of this project was to implement the pathfinding algorithm (and not to create a game) the whole Demo part could be improved. 
-Example: 
 1. Baking the node data once, after the start and destination node is selected would be much better, but I stuck with a more common logic as it's more flexible.
+2. Currently the Node cost variable is always 0, but it can be used to indicate different terrains, etc.
 
 ## Example output
 ```
@@ -47,11 +46,7 @@ Example:
 7 X - S X - - - - - - - - - - - - - - X - - - - - X - - - - - - X - - - - - - - - - - - - - - - - - - - - - - - - X - - - - - - X - - - - - - - - - X - - - - - - - X - - - - - - - - - - X - - - - - - - X
 8 X - - - - - - - - - X - - X - - - - - - - - - - - - - X - - X - - - - - - - - - - - - - - X - - - - - X - - - - - - - - X X - - - - - - - - - X X - - - - - - - - - - X - X - - - - X - - - - - - - - - X
 9 X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X
-Please type the destination column number.
-98
-Please type the destination row number.
-4
-Press any key to start the pathfinding.
+
 
    0 1 2 3 4 5 6 7 8 9 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 7 7 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 8 8 8 9 9 9 9 9 9 9 9 9 9 1 
                        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0

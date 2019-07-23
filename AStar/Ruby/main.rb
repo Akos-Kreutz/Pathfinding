@@ -2,6 +2,7 @@ require './input'
 require './board'
 require './astar'
 
+# The Main Program Loop.
 class Main
 
   ##
