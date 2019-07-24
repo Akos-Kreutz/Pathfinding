@@ -10,6 +10,7 @@ All of these implementations have a user interface, so it's easy to try them out
 - C#
 - Java
 - Ruby
+- Python
 
 ## Note
 The main focus of this project is to provide multiple implementations of the algorithms in different languages to help as many people as I can.
