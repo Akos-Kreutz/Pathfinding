@@ -49,6 +49,8 @@ class Node
       'D'
     when :path
       '*'
+    when :checked
+      '?'
     else
       '-'
     end

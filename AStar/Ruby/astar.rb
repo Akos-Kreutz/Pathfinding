@@ -71,7 +71,10 @@ class AStar
           neighbour.parent = current_node if get_f_value(neighbour) > get_f_value_with_g(neighbour, current_node.g)
         end
       end
+    end
 
+    closed_nodes.each do |node|
+      node.type = :checked if node != starting_node && node != destination_node
     end
 
     path

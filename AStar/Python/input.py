@@ -23,7 +23,7 @@ class Input:
     if input.lower() == "exit":
       quit(0)
     elif input.lower() == "help": 
-      print("Symbol Description\n- : floor node.\nX : wall node.\nS : starting node.\nD : destination node.\n* : path node.\nCommands\nType exit to close the application.")
+      print("Symbol Description\n- : floor node.\nX : wall node.\nS : starting node.\nD : destination node.\n* : path node.\n? : Nodes that were checked, but not part of the path.\nCommands\nType exit to close the application.")
 
     return input
 

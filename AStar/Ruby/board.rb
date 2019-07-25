@@ -135,7 +135,7 @@ class Board
   # +path+:: The path from start to destination.
   def mark_path(path)
     path.each do |step|
-      set_path_node(step.x, step.y) if step.type == :floor
+      set_path_node(step.x, step.y) if step != @start_node && step != @destination_node
     end
   end
 

@@ -123,7 +123,7 @@ namespace Pathfinding {
         Environment.Exit(0);
       } 
       else if(input.ToLower().Equals("help")){
-        System.Console.WriteLine("Symbol Description{0}- : floor node.{0}X : wall node.{0}S : starting node.{0}D : destination node.{0}* : path node.{0}Commands{0}Type exit to close the application.", Environment.NewLine);
+        System.Console.WriteLine("Symbol Description{0}- : floor node.{0}X : wall node.{0}S : starting node.{0}D : destination node.{0}* : path node.{0}? : Nodes that were checked, but not part of the path.{0}Commands{0}Type exit to close the application.", Environment.NewLine);
       }
 
       return input;

@@ -106,7 +106,7 @@ class Board:
   """
   def mark_path(self, path):
     for step in path:
-      if step.type == Types.FLOOR:
+      if not step == self.start_node and not step == self.destination_node:
         self.set_path_node(step.x, step.y)
 
   """Generates a string from the node matrix and adds marking numbers to it, then writes it to the console.

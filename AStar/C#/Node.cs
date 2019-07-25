@@ -7,7 +7,7 @@ namespace Pathfinding {
   /// The Main class for the node which is the building block of the board.
   /// </summary>
   class Node {
-    public enum Types {Wall, Floor, Start, Destination, Path} //Node Types
+    public enum Types {Wall, Floor, Start, Destination, Path, Checked} //Node Types
 
     public Types type {get; set;} //The type of the node.
     public Node parent {get; set;} //Parent node, used for backtracking the path.
@@ -51,6 +51,9 @@ namespace Pathfinding {
       } 
       else if(type.Equals(Types.Path)){
         return "*";
+      } 
+      else if(type.Equals(Types.Checked)){
+        return "?";
       } 
       else {
         return "-";
