@@ -38,24 +38,24 @@ namespace Pathfinding {
       do {
         
         //Selects the node with the lowest F value from the open node list, then checks it's neighbours.
-        Node currentTile = GetTileWithLowestFValue(openNodes);
+        Node currentNode = GetNodeWithLowestFValue(openNodes);
 
-        closedNodes.Add(currentTile);
-        openNodes.Remove(currentTile);
+        closedNodes.Add(currentNode);
+        openNodes.Remove(currentNode);
 
         //If the closed node list contains the destination, then the path is completed.
         if (closedNodes.Contains(destinationNode)) {
 
           //Backtracking and adding the steps to the stack.
-          while (currentTile.parent != null) {
-            path.Push(currentTile);
-            currentTile = currentTile.parent;
+          while (currentNode.parent != null) {
+            path.Push(currentNode);
+            currentNode = currentNode.parent;
           }
           break;
         }
 
         //Checks each neighbour of the node.
-        foreach (Node neighbour in currentTile.neighbours) {
+        foreach (Node neighbour in currentNode.neighbours) {
 
           //Filtering out nodes that are not fit for path.
           if (!neighbour.type.Equals(Node.Types.Wall)) {
@@ -64,24 +64,31 @@ namespace Pathfinding {
               continue;
             }
 
-            neighbour.G = GetGValue(currentTile)+ neighbour.cost;
+            neighbour.G = GetGValue(currentNode)+ neighbour.cost;
             neighbour.H = GetHValue(neighbour);
             neighbour.F = GetFValue(neighbour);
 
             //If it's not in the open list, add it and set the parent.
             //Else check if the F value is better with the current node, if it is then set the it's parent to the current node.
             if (!openNodes.Contains(neighbour)) {
-              neighbour.parent = currentTile;
+              neighbour.parent = currentNode;
               openNodes.Add(neighbour);
             }
             else { 
-              if(GetFValue(neighbour) > GetFValueWithG(neighbour, currentTile.G)){
-                neighbour.parent = currentTile;
+              if(GetFValue(neighbour) > GetFValueWithG(neighbour, currentNode.G)){
+                neighbour.parent = currentNode;
               }
             }
           }
         }
       } while (openNodes.Count > 0);
+
+      //Marks all the checked nodes.
+      foreach (Node node in closedNodes) {
+        if(!node.Equals(destinationNode) && !node.Equals(startNode)){
+          node.type = Node.Types.Checked;
+        }
+      }
 
       return path;
     }
@@ -93,7 +100,7 @@ namespace Pathfinding {
     /// <returns>
     /// The node with the lowest total cost.
     /// </returns>
-    private Node GetTileWithLowestFValue(List<Node> nodes){
+    private Node GetNodeWithLowestFValue(List<Node> nodes){
       Node chosenNode = null;
 
       foreach (Node openNode in nodes) {

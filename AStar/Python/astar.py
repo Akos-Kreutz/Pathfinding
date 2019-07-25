@@ -66,6 +66,10 @@ class AStar:
           elif self.get_f_value(neighbour) > self.get_f_value_with_g(neighbour, current_node.g):
             neighbour.parent = current_node
 
+      for node in closed_nodes:
+        if not node == starting_node and not node == destination_node:
+          node.type = Types.CHECKED
+
     return path
 
   """Searches for the node with the lowest total cost in the node list.

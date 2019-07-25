@@ -20,7 +20,7 @@ public class Main {
       System.out.println("Press any key to start.");
       processInput(System.console().readLine());
 
-      boardHandler.GenerateBoard(10, 10);
+      boardHandler.generateBoard(10, 10);
 
       mainLoop();
     }
@@ -34,7 +34,7 @@ public class Main {
       int x, y;
 
       do {
-        boardHandler.DrawBoard();
+        boardHandler.drawBoard();
 
         x = getCoordinate("Please type the start column number.");
         y = getCoordinate("Please type the start row number.");
@@ -42,10 +42,10 @@ public class Main {
       } while (!boardHandler.isCoordinateAvailable(x,y));
 
       boardHandler.setStartingNode(x,y);
-      boardHandler.DrawBoard();
+      boardHandler.drawBoard();
 
       do {
-        boardHandler.DrawBoard();
+        boardHandler.drawBoard();
 
         x = getCoordinate("Please type the destination column number.");
         y = getCoordinate("Please type the destination row number.");
@@ -53,7 +53,7 @@ public class Main {
       } while (!boardHandler.isCoordinateAvailable(x,y));
 
       boardHandler.setDestinationNode(x,y);
-      boardHandler.DrawBoard();
+      boardHandler.drawBoard();
 
       System.out.println("Press any key to start the pathfinding.");
       processInput(System.console().readLine());
@@ -67,7 +67,7 @@ public class Main {
       }
 
       boardHandler.markPath(path);
-      boardHandler.DrawBoard();
+      boardHandler.drawBoard();
 
       processInput(System.console().readLine());
     }
@@ -95,11 +95,14 @@ public class Main {
     private static int getCoordinate(String text){
       System.out.println(text);
 
-      while(!isItANumber(processInput(System.console().readLine()))){
+      String input = System.console().readLine();
+
+      while(!isItANumber(processInput(input))){
         System.out.println("Please try again.");
+        input = System.console().readLine();
       }
 
-      return Integer.parseInt(System.console().readLine());
+      return Integer.parseInt(input);
     }
 
   /**
@@ -113,9 +116,9 @@ public class Main {
         System.exit(0);
       }
       else if(input.toLowerCase().equals("help")){
-        System.out.println("Symbol Description"+ System.lineSeparator() +"- : floor node."+ System.lineSeparator() +"X : wall node."+ System.lineSeparator() +
-                "S : starting node."+ System.lineSeparator() +"D : destination node."+ System.lineSeparator() +"* : path node."+ System.lineSeparator() +
-                "Commands"+ System.lineSeparator() +"Type exit to close the application.");
+        System.out.println("Symbol Description" + System.lineSeparator() + "- : floor node." + System.lineSeparator() + "X : wall node." + System.lineSeparator() +
+                "S : starting node." + System.lineSeparator() + "D : destination node." + System.lineSeparator() + "* : path node." + System.lineSeparator() +
+                "? : Nodes that were checked, but not part of the path." + System.lineSeparator() + "Commands" + System.lineSeparator() + "Type exit to close the application.");
       }
 
       return input;

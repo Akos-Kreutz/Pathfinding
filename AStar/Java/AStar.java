@@ -38,24 +38,24 @@ public class AStar {
     do {
 
       //Selects the node with the lowest F value from the open node list, then checks it's neighbours.
-      Node currentTile = GetTileWithLowestFValue(openNodes);
+      Node currentNode = getNodeWithLowestFValue(openNodes);
 
-      closedNodes.add(currentTile);
-      openNodes.remove(currentTile);
+      closedNodes.add(currentNode);
+      openNodes.remove(currentNode);
 
       //If the closed node list contains the destination, then the path is completed.
       if (closedNodes.contains(destinationNode)) {
 
         //Backtracking and adding the steps to the stack.
-        while (currentTile.getParent() != null) {
-          path.push(currentTile);
-          currentTile = currentTile.getParent();
+        while (currentNode.getParent() != null) {
+          path.push(currentNode);
+          currentNode = currentNode.getParent();
         }
         break;
       }
 
       //Checks each neighbour of the node.
-      for(Node neighbour: currentTile.getNeighbours()){
+      for(Node neighbour: currentNode.getNeighbours()){
 
         //Filtering out nodes that are not fit for path.
         if (!neighbour.getType().equals(Node.Types.Wall)) {
@@ -64,24 +64,30 @@ public class AStar {
             continue;
           }
 
-          neighbour.setG(GetGValue(currentTile)+ neighbour.getCost());
-          neighbour.setH(GetHValue(neighbour));
-          neighbour.setF(GetFValue(neighbour));
+          neighbour.setG(getGValue(currentNode)+ neighbour.getCost());
+          neighbour.setH(getHValue(neighbour));
+          neighbour.setF(getFValue(neighbour));
 
           //If it's not in the open list, add it and set the parent.
           //Else check if the F value is better with the current node, if it is then set the it's parent to the current node.
           if (!openNodes.contains(neighbour)) {
-            neighbour.setParent(currentTile);
+            neighbour.setParent(currentNode);
             openNodes.add(neighbour);
           }
           else {
-            if(GetFValue(neighbour) > GetFValueWithG(neighbour, currentTile.getG())){
-              neighbour.setParent(currentTile);
+            if(getFValue(neighbour) > getFValueWithG(neighbour, currentNode.getG())){
+              neighbour.setParent(currentNode);
             }
           }
         }
       }
     } while (openNodes.size() > 0);
+
+    for(Node node: closedNodes){
+      if(!node.equals(startNode) && !node.equals(destinationNode)){
+        node.setType(Node.Types.Checked);
+      }
+    }
 
     return path;
   }
@@ -91,11 +97,11 @@ public class AStar {
    * @param nodes List of nodes.
    * @return The node with the lowest total cost.
    */
-  private Node GetTileWithLowestFValue(ArrayList<Node> nodes){
+  private Node getNodeWithLowestFValue(ArrayList<Node> nodes){
     Node chosenNode = null;
 
     for(Node openNode: nodes) {
-      if (chosenNode == null || GetFValue(openNode) < GetFValue(chosenNode)){
+      if (chosenNode == null || getFValue(openNode) < getFValue(chosenNode)){
         chosenNode = openNode;
       }
     }
@@ -109,7 +115,7 @@ public class AStar {
    * @param gValue >The G value of another node.
    * @return
    */
-  private int GetFValueWithG(Node node, int gValue) {
+  private int getFValueWithG(Node node, int gValue) {
     return node.getH() + gValue;
   }
 
@@ -118,7 +124,7 @@ public class AStar {
    * @param node The node for which the value is calculated.
    * @return The sum of the G and H value.
    */
-  private int GetFValue(Node node){
+  private int getFValue(Node node){
     return node.getH() + node.getG();
   }
 
@@ -126,20 +132,20 @@ public class AStar {
    * Calculates the heuristic distance between the node and the starting node.
    * @param node The node which position is used for the calculation.
    * @return The absolute distance between the starting and the given node.
-   * {@link #GetHeuristicDistance(Node, Node)}
+   * {@link #getHeuristicDistance(Node, Node)}
    */
-  private int GetGValue(Node node) {
-    return GetHeuristicDistance(boardHandler.getStartingNode(), node);
+  private int getGValue(Node node) {
+    return getHeuristicDistance(boardHandler.getStartingNode(), node);
   }
 
   /**
    * Calculates the heuristic distance between the node and the destination node.
    * @param node The node which position is used for the calculation.
    * @return The absolute distance between the destination and the given node.
-   * {@link #GetHeuristicDistance(Node, Node)}
+   * {@link #getHeuristicDistance(Node, Node)}
    */
-  private int GetHValue(Node node) {
-    return GetHeuristicDistance(boardHandler.getDestinationNode(), node);
+  private int getHValue(Node node) {
+    return getHeuristicDistance(boardHandler.getDestinationNode(), node);
   }
 
   /**
@@ -148,7 +154,7 @@ public class AStar {
    * @param node2
    * @return The absolute distance between two nodes.
    */
-  private int GetHeuristicDistance(Node node1, Node node2){
+  private int getHeuristicDistance(Node node1, Node node2){
     return Math.abs(node1.getX() - node2.getX() + Math.abs(node1.getY() - node2.getY()));
   }
 
