@@ -27,7 +27,7 @@ class Input
     when 'exit'
       exit 0
     when 'help'
-      puts "Symbol Description\n- : floor node.\nX : wall node.\nS : starting node.\nD : destination node.\n* : path node.\nCommands\nType exit to close the application."
+      puts "Symbol Description\n- : floor node.\nX : wall node.\nS : starting node.\nD : destination node.\n* : path node.\n? : Nodes that were checked, but not part of the path.\nCommands\nType exit to close the application."
     else
       input
     end

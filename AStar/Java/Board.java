@@ -23,7 +23,7 @@ public class Board {
    * {@link #nodes}
    * {@link #GetNeighbours(Node)}
    */
-  public void GenerateBoard(int width, int height){
+  public void generateBoard(int width, int height){
     this.width = width;
     this.height = height;
 
@@ -62,7 +62,7 @@ public class Board {
   /**
    * Generates a string from the node matrix and adds marking numbers to it, then writes it to the console.
    */
-  public void DrawBoard(){
+  public void drawBoard(){
     //Using StringBuilder for better performance as the board size can change.
     StringBuilder board = new StringBuilder();
     StringBuilder horizontalNumberRow = new StringBuilder((width * 2) + 2);
@@ -87,8 +87,7 @@ public class Board {
       board.append(System.lineSeparator());
     }
 
-    String horizontalNumberString = horizontalNumberRow.insert(0, " ").toString();
-    System.out.println(horizontalNumberRow.toString() + System.lineSeparator() + board.toString());
+    System.out.println(horizontalNumberRow.insert(0, "  ").toString() + System.lineSeparator() + board.toString());
   }
 
   /**
@@ -168,7 +167,7 @@ public class Board {
 
       Node currentNode = path.pop();
 
-      if(currentNode.getType().equals(Node.Types.Floor)){
+      if(!currentNode.equals(startingNode) && !currentNode.equals(destinationNode)){
         setPathNode(currentNode.getX(), currentNode.getY());
       }
     }

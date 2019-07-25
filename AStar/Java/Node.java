@@ -12,7 +12,7 @@ public class Node {
    * The  node types, every type has it's own representation on the board.
    */
   public enum Types {
-    Wall ("X"), Floor ("-"), Start ("S"), Destination ("D"), Path ("*");
+    Wall ("X"), Floor ("-"), Start ("S"), Destination ("D"), Path ("*"), Checked("?");
 
     private final String mark;
 

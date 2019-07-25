@@ -173,7 +173,7 @@ namespace Pathfinding {
 
         Node currentNode = path.Pop();
 
-        if(currentNode.type.Equals(Node.Types.Floor)){
+        if(!currentNode.Equals(destinationNode) && !currentNode.Equals(startingNode)){
           SetPathNode(currentNode.x, currentNode.y);
         }
       }

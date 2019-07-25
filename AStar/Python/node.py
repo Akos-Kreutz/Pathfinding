@@ -29,4 +29,5 @@ class Types(Enum):
   START = "S"
   DESTINATION = "D"
   PATH = "*"
+  CHECKED = "?"
 
