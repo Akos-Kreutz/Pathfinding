@@ -53,7 +53,7 @@ namespace Pathfinding {
         return "*";
       } 
       else if(type.Equals(Types.Checked)){
-        return "?";
+        return "~";
       } 
       else {
         return "-";

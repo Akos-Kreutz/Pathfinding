@@ -7,22 +7,14 @@ namespace Pathfinding {
   /// The Main class for A* pathfinding.
   /// Contains all the logic required to generate the path.
   /// </summary>
-  class AStar {
+  class Astar : Pathfinding{
 
-    private Board boardHandler {get; set;} //The Board on which the algorithm searches the path.
-
-    /// <summary>
-    /// Sets the reference Board to ensure that the functions can work properly.
-    /// </summary>
-    /// <param name="boardHandler">The Board on which the path is calculated.</param>
-    public AStar(Board boardHandler){
-      this.boardHandler = boardHandler;
-    }
+    public Astar(Board boardHandler) : base(boardHandler) {}
 
     /// <summary>
     /// Calculates the path to the target using the A* algorithm, then returns it. If there is not path, returns an empty stack.
     /// </summary>
-    public Stack<Node> GetPath(){
+    public override Stack<Node> GetPath(){
       Stack<Node> path = new Stack<Node>();
 
       //Creating the open and closed node list.
@@ -137,7 +129,7 @@ namespace Pathfinding {
     /// Calculates the heuristic distance between the node and the starting node.
     /// </summary>
     /// <param name="node">The node which position is used for the calculation.</param>
-    /// <seealso cref="AStar.GetHeuristicDistance(Node, Node)"/>
+    /// <seealso cref="Astar.GetHeuristicDistance(Node, Node)"/>
     /// <returns>
     /// The absolute distance between the starting and the given node.
     /// </returns>
@@ -149,7 +141,7 @@ namespace Pathfinding {
     /// Calculates the heuristic distance between the node and the destination node.
     /// </summary>
     /// <param name="node">The node which position is used for the calculation.</param>
-    /// <seealso cref="AStar.GetHeuristicDistance(Node, Node)"/>
+    /// <seealso cref="Astar.GetHeuristicDistance(Node, Node)"/>
     /// <returns>
     /// The absolute distance between the destination and the given node.
     /// </returns>

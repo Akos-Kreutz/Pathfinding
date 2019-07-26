@@ -1,7 +1,7 @@
 # Python A* Implementation
 
 ## Introduction
-The goal of this project was to create an easy to understand implementation of the A* pathfinding algorithm in Python.
+The goal of this project was to create an easy to understand implementation of the different pathfinding algorithms in Python.
 To make the project more user friendly I created a simple CLI BoardGame in which you can try out the algorithm.
 
 ## Things that can be improved
@@ -10,7 +10,9 @@ Example:
 1. Baking the node data once, after the start and destination node is selected would be much better, but I stuck with a more common logic as it's more flexible.
 2. Currently the Node cost variable is always 0, but it can be used to indicate different terrains, etc.
 
-## Example output
+## A* Search Algorithm
+
+### Example output
 ```
   0 1 2 3 4 5 6 7 8 9 
 0 X X X X X X X X X X
@@ -37,7 +39,7 @@ Example:
 9 X X X X X X X X X X
 ```
 
-## Example Scenario
+### Example Scenario
 ```
 Symbol Description
 - : floor node.
