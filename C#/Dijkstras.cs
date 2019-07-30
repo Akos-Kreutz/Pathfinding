@@ -5,15 +5,15 @@ using System.Text.RegularExpressions;
 namespace Pathfinding {
 
   /// <summary>
-  /// The Main class for Breadth First pathfinding.
+  /// The Main class for Dijkstra's pathfinding.
   /// Contains all the logic required to generate the path.
   /// </summary>
-  class BreadthFirst : Pathfinding{
+  class Dijkstras : Pathfinding{
 
-    public BreadthFirst(Board boardHandler) : base(boardHandler) {}
+    public Dijkstras(Board boardHandler) : base(boardHandler) {}
 
     /// <summary>
-    /// Calculates the path to the target using the Breadth First algorithm, then returns it.
+    /// Calculates the path to the target using the Dijkstra's algorithm, then returns it.
     /// </summary>
     public override Path GetPath(){
       Stack<Node> path = new Stack<Node>();
@@ -28,20 +28,19 @@ namespace Pathfinding {
 
       openNodes.Enqueue(startNode);
 
-      while (openNodes.Count > 0) {
-        
-        //Selects the next node to check.
+      do {
+        //Selects the next node from the queue.
         Node currentNode = openNodes.Dequeue();
         if(!closedNodes.Contains(currentNode)){ closedNodes.Add(currentNode); }
 
-        //If the current node is the destination node, then the path is complete.
-        if (currentNode == destinationNode) {
-
+        //If the closed node list contains the destination, then the path is completed.
+        if (closedNodes.Contains(destinationNode)) {
           //Backtracking and adding the steps to the stack.
-          while (currentNode != startNode) {
+          while (currentNode.parent != null) {
             path.Push(currentNode);
             currentNode = currentNode.parent;
           }
+
           break;
         }
 
@@ -51,13 +50,22 @@ namespace Pathfinding {
           //Filtering out nodes that are not fit for path.
           if (!neighbour.type.Equals(Node.Types.Wall)) {
 
-            if (!closedNodes.Contains(neighbour)) {
+            if (closedNodes.Contains(neighbour)) {
+              continue;
+            }
+
+            //Calculates the new cost based on the "distance" between the two nodes.
+            int newCost = currentNode.Distance + neighbour.cost;
+
+            //If the node is not checked yet, or the new cost is better than the current, queues the node.
+            if (!openNodes.Contains(neighbour) || newCost < currentNode.Distance) {
               neighbour.parent = currentNode;
               openNodes.Enqueue(neighbour);
+              neighbour.Distance = newCost;
             }
           }
         }
-      }
+      } while (openNodes.Count > 0);
 
       return new Path(path, closedNodes);
     }

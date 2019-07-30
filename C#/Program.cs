@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Pathfinding {
 
@@ -7,10 +8,12 @@ namespace Pathfinding {
   /// The Main Program Loop.
   /// </summary>
   class Program {
-    private readonly static Board BoardHandler = new Board(); //Board instance
-    private readonly static Dictionary<int, Pathfinding> PathHandlers = new Dictionary<int, Pathfinding>(){
-      {0, new Astar(BoardHandler)},
-      {1, new BreadthFirst(BoardHandler)}
+    private readonly static Board boardHandler = new Board(); //Board instance
+    private readonly static Dictionary<int, Pathfinding> pathHandlers = new Dictionary<int, Pathfinding>(){
+      {0, new DepthFirst(boardHandler)},
+      {1, new BreadthFirst(boardHandler)},
+      {2, new Dijkstras(boardHandler)},
+      {3, new Astar(boardHandler)}
     }; //The Pathfinder Algorithms with their assigned index.
 
     /// <summary>
@@ -28,7 +31,7 @@ namespace Pathfinding {
         System.Console.WriteLine("Press any key to start.");
         ProcessInput(System.Console.ReadLine());
 
-        BoardHandler.GenerateBoard(10,10);
+        boardHandler.GenerateBoard(10,10);
         
         MainLoop();
       }
@@ -44,21 +47,23 @@ namespace Pathfinding {
 
       SetCoordinates(out x, out y, "starting");
 
-      BoardHandler.SetStartingNode(x,y);
-      BoardHandler.DrawBoard();
+      boardHandler.SetStartingNode(x,y);
+      boardHandler.DrawBoard();
 
       SetCoordinates(out x, out y, "destination");
 
-      BoardHandler.SetDestinationNode(x,y);
-      BoardHandler.DrawBoard();
+      boardHandler.SetDestinationNode(x,y);
+      boardHandler.DrawBoard();
 
-      Stack<Node> path = GetPathfindingMethod().GetPath();
+      Path path = GetPathfindingMethod().GetPath();
 
-      if(path.Count == 0){
+      if(path.steps.Count == 0){
         System.Console.WriteLine("No Path found.");
       } else {
-        BoardHandler.MarkPath(path);
-        BoardHandler.DrawBoard();
+        boardHandler.MarkCheckedNodes(path);
+        boardHandler.MarkPath(path);
+        boardHandler.DrawBoard();
+        System.Console.WriteLine(GetStatistics(path));
       }
 
       ProcessInput(System.Console.ReadLine());
@@ -85,12 +90,12 @@ namespace Pathfinding {
     /// <seealso cref="Program.SetCoordinate(string, out int)"/>
     private static void SetCoordinates(out int x, out int y, string name){
       do {
-        BoardHandler.DrawBoard();
+        boardHandler.DrawBoard();
 
         SetCoordinate(string.Format("Please type the {0} column number.", name), out x);
         SetCoordinate(string.Format("Please type the {0} row number.", name), out y);
 
-      } while (!BoardHandler.IsCoordinateAvailable(x,y));
+      } while (!boardHandler.IsCoordinateAvailable(x,y));
     }
 
     /// <summary>
@@ -136,15 +141,38 @@ namespace Pathfinding {
 
       System.Console.WriteLine("Please choose a pathfinding method.");
 
-      foreach(KeyValuePair<int, Pathfinding> pair in PathHandlers){
+      foreach(KeyValuePair<int, Pathfinding> pair in pathHandlers){
         System.Console.WriteLine("{0} : {1}", pair.Key, pair.Value);
       }
 
-      while(!IsItANumber(ProcessInput(System.Console.ReadLine()), out number) || !(number < PathHandlers.Count && number >= 0)) {
+      while(!IsItANumber(ProcessInput(System.Console.ReadLine()), out number) || !(number < pathHandlers.Count && number >= 0)) {
         System.Console.WriteLine("Please try again.");
       }
 
-      return PathHandlers[number];
+      return pathHandlers[number];
     }
+
+    /// <summary>
+    /// Generates the statistics of a given path, then returns the formated string.
+    /// </summary>
+    /// <param name="path">The path from which the statistics are genarated.</param>
+    /// <returns>
+    /// A String which contains the path statistics.
+    /// </returns>
+    private static string GetStatistics(Path path){
+      StringBuilder sb = new StringBuilder();
+      sb.Append("Total cost of the board: " + boardHandler.boardCost + Environment.NewLine);
+      sb.Append("Number of checked nodes: " + path.closedNodes.Count + Environment.NewLine);
+      sb.Append("Number of steps: " + path.steps.Count + Environment.NewLine);
+      sb.Append("Total cost of the path: " + path.cost + Environment.NewLine);
+      sb.Append("Path: " + Environment.NewLine);
+
+      foreach(Node step in path.steps){
+        sb.Append(string.Format("X: {0} Y: {1} Cost: {2}{3}", step.x, step.y, step.cost, Environment.NewLine));
+      }
+      
+      return sb.ToString();
+    }
+
   }
 }
