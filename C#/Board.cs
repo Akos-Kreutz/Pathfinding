@@ -11,6 +11,7 @@ namespace Pathfinding {
     public int width {get; private set;} //The width of the board.
     public int height {get; private set;} //The height of the board.
     public Node[,] nodes {get; private set;} //Matrix that holds all the nodes, which is essentially the board itself.
+    public int boardCost {get; private set;} //The sum of every nodes cost.
 
     public Node startingNode {get; private set;} //Reference for the starting node
     public Node  destinationNode {get; private set;} //Reference for the destination node
@@ -46,7 +47,8 @@ namespace Pathfinding {
             }
           }
 
-          nodes[i,j] = new Node(type,j,i);
+          nodes[i,j] = new Node(type,j,i, rng.Next(1,10));
+          boardCost += nodes[i,j].cost;
         }
       }
 
@@ -164,17 +166,27 @@ namespace Pathfinding {
     }
 
     /// <summary>
-    /// Iterates through the path and if the node type is floor marks it.
+    /// Iterates through the steps of the path and if the node type is floor marks it.
     /// </summary>
     /// <param name="path">The path from start to destination.</param>
     /// <seealso cref="Board.SetPathNode(int, int)"/>
-    public void MarkPath(Stack<Node> path){
-      while(path.Count > 0){
+    public void MarkPath(Path path){
+      foreach(Node step in path.steps){
+        if(!step.Equals(destinationNode) && !step.Equals(startingNode)){
+          SetPathNode(step.x, step.y);
+        }
+      }
+    }
 
-        Node currentNode = path.Pop();
-
-        if(!currentNode.Equals(destinationNode) && !currentNode.Equals(startingNode)){
-          SetPathNode(currentNode.x, currentNode.y);
+    /// <summary>
+    /// Iterates through the closed nodes of the path and if the node type is floor marks it.
+    /// </summary>
+    /// <param name="path">The path from start to destination.</param>
+    /// <seealso cref="Board.SetPathNode(int, int)"/>
+    public void MarkCheckedNodes(Path path){
+      foreach (Node node in path.closedNodes) {
+        if(!node.Equals(destinationNode) && !node.Equals(startingNode)){
+          node.type = Node.Types.Checked;
         }
       }
     }
