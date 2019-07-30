@@ -25,76 +25,91 @@ Press any key to start.
 
   0 1 2 3 4 5 6 7 8 9 
 0 X X X X X X X X X X 
-1 X X - - - - - X - X
-2 X - - X - - - X - X
-3 X - X - - - X - - X
+1 X - - - X - - - - X 
+2 X - - - - - - X - X
+3 X - - X - - - - - X
 4 X - - - - - - X - X
 5 X - - - - - - - - X
-6 X - - - - - X - - X
-7 X X - - - - - - X X
-8 X - - - - - - - X X
+6 X X - X - - - - - X
+7 X - - - X - - - - X
+8 X - - - X - - - - X
 9 X X X X X X X X X X
 
 Please type the starting column number.
-2
+1
 Please type the starting row number.
 1
   0 1 2 3 4 5 6 7 8 9 
 0 X X X X X X X X X X
-1 X X S - - - - X - X
-2 X - - X - - - X - X
-3 X - X - - - X - - X
+1 X S - - X - - - - X
+2 X - - - - - - X - X
+3 X - - X - - - - - X
 4 X - - - - - - X - X
 5 X - - - - - - - - X
-6 X - - - - - X - - X
-7 X X - - - - - - X X
-8 X - - - - - - - X X
+6 X X - X - - - - - X
+7 X - - - X - - - - X
+8 X - - - X - - - - X
 9 X X X X X X X X X X
 
   0 1 2 3 4 5 6 7 8 9
 0 X X X X X X X X X X
-1 X X S - - - - X - X
-2 X - - X - - - X - X
-3 X - X - - - X - - X
+1 X S - - X - - - - X
+2 X - - - - - - X - X
+3 X - - X - - - - - X
 4 X - - - - - - X - X
 5 X - - - - - - - - X
-6 X - - - - - X - - X
-7 X X - - - - - - X X
-8 X - - - - - - - X X
+6 X X - X - - - - - X
+7 X - - - X - - - - X
+8 X - - - X - - - - X
 9 X X X X X X X X X X
 
 Please type the destination column number.
-7
+5
 Please type the destination row number.
-3
+5
   0 1 2 3 4 5 6 7 8 9 
 0 X X X X X X X X X X
-1 X X S - - - - X - X
-2 X - - X - - - X - X
-3 X - X - - - X D - X
+1 X S - - X - - - - X
+2 X - - - - - - X - X
+3 X - - X - - - - - X
 4 X - - - - - - X - X
-5 X - - - - - - - - X
-6 X - - - - - X - - X
-7 X X - - - - - - X X
-8 X - - - - - - - X X
+5 X - - - - D - - - X
+6 X X - X - - - - - X
+7 X - - - X - - - - X
+8 X - - - X - - - - X
 9 X X X X X X X X X X
 
 Please choose a pathfinding method.
-0 : Astar
+0 : Depth First
 1 : Breadth First
-0
-
-  0 1 2 3 4 5 6 7 8 9
+2 : Dijkstras
+3 : Astar
+1
+  0 1 2 3 4 5 6 7 8 9 
 0 X X X X X X X X X X
-1 X X S * * ~ ~ X - X
-2 X ~ ~ X * ~ ~ X - X
-3 X ~ X ~ * ~ X D * X
-4 X ~ ~ ~ * ~ ~ X * X
-5 X ~ ~ ~ * * * * * X
-6 X - ~ ~ ~ ~ X ~ - X
-7 X X - - - - - - X X
-8 X - - - - - - - X X
+1 X S * * X ~ ~ - - X
+2 X ~ ~ * * * ~ X - X
+3 X ~ ~ X ~ * ~ - - X
+4 X ~ ~ ~ ~ * - X - X
+5 X ~ ~ ~ ~ D - - - X
+6 X X ~ X ~ - - - - X
+7 X ~ ~ ~ X - - - - X
+8 X - ~ - X - - - - X
 9 X X X X X X X X X X
+
+Total cost of the board: 512
+Number of checked nodes: 32
+Number of steps: 8
+Total cost of the path: 44
+Path:
+X: 2 Y: 1 Cost: 2
+X: 3 Y: 1 Cost: 6
+X: 3 Y: 2 Cost: 9
+X: 4 Y: 2 Cost: 3
+X: 5 Y: 2 Cost: 4
+X: 5 Y: 3 Cost: 6
+X: 5 Y: 4 Cost: 6
+X: 5 Y: 5 Cost: 8
 ```
 
 ## Example outputs

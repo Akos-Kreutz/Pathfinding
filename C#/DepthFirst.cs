@@ -5,33 +5,33 @@ using System.Text.RegularExpressions;
 namespace Pathfinding {
 
   /// <summary>
-  /// The Main class for Breadth First pathfinding.
+  /// The Main class for Depth First pathfinding.
   /// Contains all the logic required to generate the path.
   /// </summary>
-  class BreadthFirst : Pathfinding{
+  class DepthFirst : Pathfinding{
 
-    public BreadthFirst(Board boardHandler) : base(boardHandler) {}
+    public DepthFirst(Board boardHandler) : base(boardHandler) {}
 
     /// <summary>
-    /// Calculates the path to the target using the Breadth First algorithm, then returns it.
+    /// Calculates the path to the target using the Depth First algorithm, then returns it.
     /// </summary>
     public override Path GetPath(){
       Stack<Node> path = new Stack<Node>();
 
       //Creating the open and closed node list.
-      Queue<Node> openNodes = new Queue<Node>();
+      Stack<Node> openNodes = new Stack<Node>();
       List<Node> closedNodes = new List<Node>();
 
       //References for the start and destination node for easier use.
       Node startNode = boardHandler.startingNode;
       Node destinationNode = boardHandler.destinationNode;
 
-      openNodes.Enqueue(startNode);
+      openNodes.Push(startNode);
 
       while (openNodes.Count > 0) {
         
         //Selects the next node to check.
-        Node currentNode = openNodes.Dequeue();
+        Node currentNode = openNodes.Pop();
         if(!closedNodes.Contains(currentNode)){ closedNodes.Add(currentNode); }
 
         //If the current node is the destination node, then the path is complete.
@@ -42,6 +42,7 @@ namespace Pathfinding {
             path.Push(currentNode);
             currentNode = currentNode.parent;
           }
+
           break;
         }
 
@@ -53,7 +54,7 @@ namespace Pathfinding {
 
             if (!closedNodes.Contains(neighbour)) {
               neighbour.parent = currentNode;
-              openNodes.Enqueue(neighbour);
+              openNodes.Push(neighbour);
             }
           }
         }

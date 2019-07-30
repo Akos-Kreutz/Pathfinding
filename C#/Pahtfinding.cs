@@ -16,8 +16,14 @@ namespace Pathfinding {
       this.boardHandler = boardHandler;
     }
     
-    public abstract Stack<Node> GetPath();
+    /// <summary>
+    /// Return the path calculated by the pathfinding algorithm.
+    /// </summary>
+    public abstract Path GetPath();
 
+    /// <summary>
+    /// Returns the Class Name, separated by spaces after every upper case letter.
+    /// </summary>
     public override string ToString() {
       return Regex.Replace(this.GetType().Name, @"((?<=\p{Ll})\p{Lu})|((?!\A)\p{Lu}(?>\p{Ll}))", " $0");
     }

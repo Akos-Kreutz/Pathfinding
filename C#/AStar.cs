@@ -12,9 +12,9 @@ namespace Pathfinding {
     public Astar(Board boardHandler) : base(boardHandler) {}
 
     /// <summary>
-    /// Calculates the path to the target using the A* algorithm, then returns it. If there is not path, returns an empty stack.
+    /// Calculates the path to the target using the A* algorithm, then returns it.
     /// </summary>
-    public override Stack<Node> GetPath(){
+    public override Path GetPath(){
       Stack<Node> path = new Stack<Node>();
 
       //Creating the open and closed node list.
@@ -32,7 +32,7 @@ namespace Pathfinding {
         //Selects the node with the lowest F value from the open node list, then checks it's neighbours.
         Node currentNode = GetNodeWithLowestFValue(openNodes);
 
-        closedNodes.Add(currentNode);
+        if(!closedNodes.Contains(currentNode)){ closedNodes.Add(currentNode); }
         openNodes.Remove(currentNode);
 
         //If the closed node list contains the destination, then the path is completed.
@@ -75,14 +75,7 @@ namespace Pathfinding {
         }
       } while (openNodes.Count > 0);
 
-      //Marks all the checked nodes.
-      foreach (Node node in closedNodes) {
-        if(!node.Equals(destinationNode) && !node.Equals(startNode)){
-          node.type = Node.Types.Checked;
-        }
-      }
-
-      return path;
+      return new Path(path, closedNodes);
     }
 
     /// <summary>

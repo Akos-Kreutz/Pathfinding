@@ -10,11 +10,17 @@ However there will be no step by step guides (other than the code documentation)
 
 ## Implementations
 
-### A* Searching Algorithm
+### [Breadth First Searching Algorithm](https://en.wikipedia.org/wiki/Breadth-first_search)
+- C#
+
+### [Depth First Searching Algorithm](https://en.wikipedia.org/wiki/Depth-first_search)
+- C#
+
+### [Dijkstra's Shortest Path First algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+- C#
+
+### [A* Searching Algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm)
 - C#
 - Java
 - Ruby
 - Python
-
-### Breadth First Searching Algorithm
-- C#
