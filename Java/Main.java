@@ -1,19 +1,25 @@
-package com.pathfinding.astar;
+package com.pathfinding.common;
 
-import java.util.Stack;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Main Program Loop.
  */
 public class Main {
 
-  private static Board boardHandler; //Board instance
-  private static AStar pathHandler; //Pathfinding instance
+  private static Board boardHandler = new Board(); //Board instance
+  private final static HashMap<Integer, Pathfinding> pathHandlers;
+
+  static {
+    pathHandlers = new HashMap<Integer, Pathfinding>();
+    pathHandlers.put(0, new DepthFirst(boardHandler));
+    pathHandlers.put(1, new BreadthFirst(boardHandler));
+    pathHandlers.put(2, new Dijkstras(boardHandler));
+    pathHandlers.put(3, new Astar(boardHandler));
+  }
 
   public static void main(String[] args) {
-    boardHandler = new Board();
-    pathHandler = new AStar(boardHandler);
-
     //Starts an infinite loop which always generates a new board.
     while (true) {
       processInput("help");
@@ -55,19 +61,16 @@ public class Main {
       boardHandler.setDestinationNode(x,y);
       boardHandler.drawBoard();
 
-      System.out.println("Press any key to start the pathfinding.");
-      processInput(System.console().readLine());
+      Path path = getPathfindingMethod().getPath();
 
-      Stack<Node> path = pathHandler.getPath();
-
-      if(path.size() == 0){
+      if(path.getSteps().size() == 0){
         System.out.println("No Path found.");
       } else {
-        System.out.println("Path found.");
+        boardHandler.markCheckedNodes(path);
+        boardHandler.markPath(path);
+        boardHandler.drawBoard();
+        System.out.println(getStatistics(path));
       }
-
-      boardHandler.markPath(path);
-      boardHandler.drawBoard();
 
       processInput(System.console().readLine());
     }
@@ -118,9 +121,62 @@ public class Main {
       else if(input.toLowerCase().equals("help")){
         System.out.println("Symbol Description" + System.lineSeparator() + "- : floor node." + System.lineSeparator() + "X : wall node." + System.lineSeparator() +
                 "S : starting node." + System.lineSeparator() + "D : destination node." + System.lineSeparator() + "* : path node." + System.lineSeparator() +
-                "? : Nodes that were checked, but not part of the path." + System.lineSeparator() + "Commands" + System.lineSeparator() + "Type exit to close the application.");
+                "~ : Nodes that were checked, but not part of the path." + System.lineSeparator() + "Commands" + System.lineSeparator() + "Type exit to close the application.");
       }
 
       return input;
+    }
+
+  /**
+   * Lists the pathfinding methods and waits for the user to choose one.
+   * @return The chosen pathfinding method.
+   */
+  private static Pathfinding getPathfindingMethod(){
+      int number = -1;
+
+      System.out.println("Please choose a pathfinding method.");
+
+      for (Map.Entry<Integer, Pathfinding> entry : pathHandlers.entrySet()){
+        System.out.println(entry.getKey() + " " + entry.getValue());
+      }
+
+      do {
+        String input = System.console().readLine();
+
+        while(!isItANumber(processInput(input))){
+          System.out.println("Please try again.");
+          input = System.console().readLine();
+        }
+
+        number = Integer.parseInt(input);
+
+        if((number < pathHandlers.size() && number >= 0)) {
+          break;
+        } else {
+          System.out.println("Please try again.");
+        }
+      } while(true);
+
+      return pathHandlers.get(number);
+    }
+
+    /**
+     * Generates the statistics of a given path, then returns the formated string.
+     * @param path The path from which the statistics are genarated.
+     * @return A String which contains the path statistics.
+     */
+    private static String getStatistics(Path path){
+      StringBuilder sb = new StringBuilder();
+      sb.append("Total cost of the board: " + boardHandler.getBoardCost() + System.lineSeparator());
+      sb.append("Number of checked nodes: " + path.getClosedNodes().size() + System.lineSeparator());
+      sb.append("Number of steps: " + path.getSteps().size() + System.lineSeparator());
+      sb.append("Total cost of the path: " + path.getCost() + System.lineSeparator());
+      sb.append("Path: " + System.lineSeparator());
+
+      for (Node step : path.getSteps()){
+        sb.append("X " + step.getX() + " Y: " + step.getY() + " Cost: " + step.getCost() + System.lineSeparator());
+      }
+
+      return sb.toString();
     }
 }
