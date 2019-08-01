@@ -8,7 +8,6 @@ To make the project more user friendly I created a simple CLI BoardGame in which
 As the main focus of this project was to implement the pathfinding algorithm (and not to create a game) the whole Demo part could be improved. 
 Example: 
 1. Baking the node data once, after the start and destination node is selected would be much better, but I stuck with a more common logic as it's more flexible.
-2. Currently the Node cost variable is always 0, but it can be used to indicate different terrains, etc.
 
 ## Example Scenario
 ```
@@ -113,8 +112,6 @@ X: 5 Y: 5 Cost: 8
 ```
 
 ## Example outputs
-
-### A* Search Algorithm
 ```
   0 1 2 3 4 5 6 7 8 9
 0 X X X X X X X X X X
@@ -138,32 +135,5 @@ X: 5 Y: 5 Cost: 8
 6 X - - - X - - - - X
 7 X - - - - X - - - X
 8 X - - - X - - X - X
-9 X X X X X X X X X X
-```
-
-### Breadth First Search Algorithm
-```
-  0 1 2 3 4 5 6 7 8 9 
-0 X X X X X X X X X X
-1 X D * X ~ ~ ~ ~ ~ X
-2 X ~ * * * ~ ~ ~ ~ X
-3 X ~ ~ X * X ~ ~ ~ X
-4 X ~ ~ ~ * * ~ ~ X X
-5 X ~ ~ ~ ~ S ~ ~ ~ X
-6 X ~ ~ ~ ~ ~ ~ ~ ~ X
-7 X ~ ~ ~ ~ ~ ~ ~ X X
-8 X ~ ~ ~ ~ ~ ~ ~ ~ X
-9 X X X X X X X X X X
-
-  0 1 2 3 4 5 6 7 8 9 
-0 X X X X X X X X X X
-1 X X S X ~ ~ ~ - - X
-2 X ~ * ~ ~ ~ ~ ~ X X
-3 X ~ * ~ ~ ~ ~ - - X
-4 X ~ * X ~ ~ - - - X
-5 X ~ * * X - - - - X
-6 X ~ X * D X - - - X
-7 X X - ~ X - - - X X
-8 X X - - - - - - - X
 9 X X X X X X X X X X
 ```
