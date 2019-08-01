@@ -1,4 +1,4 @@
-package com.pathfinding.astar;
+package com.pathfinding.common;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -7,22 +7,18 @@ import java.util.Stack;
  * The Main class for A* pathfinding.
  * Contains all the logic required to generate the path.
  */
-public class AStar {
-  private Board boardHandler; //The Board on which the algorithm searches the path.
+public class Astar extends Pathfinding {
 
-  /**
-   * Sets the reference Board to ensure that the functions can work properly.
-   * @param boardHandler The Board on which the path is calculated.
-   */
-  public AStar(Board boardHandler){
-    this.boardHandler = boardHandler;
+  public Astar(Board boardHandler){
+    super(boardHandler);
   }
 
   /**
-   * Calculates the path to the target using the A* algorithm, then returns it. If there is not path, returns an empty stack.
-   * @return
+   * Calculates the path to the target using the A* algorithm, then returns it.
+   * @return The calculated path.
    */
-  public Stack<Node> getPath(){
+  @Override
+  public Path getPath(){
     Stack<Node> path = new Stack<Node>();
 
     //Creating the open and closed node list.
@@ -40,7 +36,7 @@ public class AStar {
       //Selects the node with the lowest F value from the open node list, then checks it's neighbours.
       Node currentNode = getNodeWithLowestFValue(openNodes);
 
-      closedNodes.add(currentNode);
+      if(!closedNodes.contains(currentNode)){ closedNodes.add(currentNode); }
       openNodes.remove(currentNode);
 
       //If the closed node list contains the destination, then the path is completed.
@@ -83,13 +79,7 @@ public class AStar {
       }
     } while (openNodes.size() > 0);
 
-    for(Node node: closedNodes){
-      if(!node.equals(startNode) && !node.equals(destinationNode)){
-        node.setType(Node.Types.Checked);
-      }
-    }
-
-    return path;
+    return new Path(path, closedNodes);
   }
 
   /**

@@ -1,8 +1,7 @@
-package com.pathfinding.astar;
+package com.pathfinding.common;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Stack;
 
 /**
  * The Main class for the Board, which contains all the board related functions.
@@ -10,6 +9,7 @@ import java.util.Stack;
 public class Board {
   private int width; //The width of the board.
   private int height; //The height of the board.
+  private int boardCost; //The sum of every nodes cost.
   private Node[][] nodes; //Matrix that holds all the nodes, which is essentially the board itself.
   private Node startingNode; //Reference for the starting node
   private Node  destinationNode; //Reference for the destination node
@@ -46,7 +46,9 @@ public class Board {
           }
         }
 
-        nodes[i][j] = new Node(type,j,i);
+        int cost = rng.nextInt(10);
+        nodes[i][j] = new Node(type, j, i, cost);
+        addToBoardCost(cost);
       }
     }
 
@@ -159,16 +161,35 @@ public class Board {
   }
 
   /**
+   * Set the node type to Checked.
+   * @param x The X coordinate of the node.
+   * @param y The Y coordinate of the node.
+   * {@link #setNode(int, int, Node.Types)}
+   */
+  public void setCheckedNode(int x, int y){
+    setNode(x,y, Node.Types.Checked);
+  }
+
+  /**
    * Iterates through the path and if the node type is floor marks it.
    * @param path The path from start to destination.
    */
-  public void markPath(Stack<Node> path){
-    while(path.size() > 0){
+  public void markPath(Path path){
+    for (Node step : path.getSteps()){
+      if(!step.equals(destinationNode) && !step.equals(startingNode)){
+        setPathNode(step.getX(), step.getY());
+      }
+    }
+  }
 
-      Node currentNode = path.pop();
-
-      if(!currentNode.equals(startingNode) && !currentNode.equals(destinationNode)){
-        setPathNode(currentNode.getX(), currentNode.getY());
+  /**
+   * Iterates through the closed nodes of the path and if the node type is floor marks it.
+   * @param path The path from start to destination.
+   */
+  public void markCheckedNodes(Path path){
+    for (Node node : path.getClosedNodes()) {
+      if(!node.equals(destinationNode) && !node.equals(startingNode)){
+        setCheckedNode(node.getX(), node.getY());
       }
     }
   }
@@ -272,5 +293,21 @@ public class Board {
    */
   private void setDestinationNode(Node destinationNode) {
     this.destinationNode = destinationNode;
+  }
+
+  /**
+   * Returns the board cost.
+   * @return The sum of every nodes cost.
+   */
+  public int getBoardCost() {
+    return boardCost;
+  }
+
+  /**
+   * Adds a value to the board cost.
+   * @param value The cost of a node.
+   */
+  private void addToBoardCost(int value){
+    boardCost += value;
   }
 }
