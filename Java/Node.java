@@ -1,4 +1,4 @@
-package com.pathfinding.astar;
+package com.pathfinding.common;
 
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Node {
    * The  node types, every type has it's own representation on the board.
    */
   public enum Types {
-    Wall ("X"), Floor ("-"), Start ("S"), Destination ("D"), Path ("*"), Checked("?");
+    Wall ("X"), Floor ("-"), Start ("S"), Destination ("D"), Path ("*"), Checked("~");
 
     private final String mark;
 
@@ -37,6 +37,7 @@ public class Node {
   private int G; //The distance between the node and the starting node.
   private int H;//The heuristic distance between the node and the destination node.
   private int F;//The total cost of a node
+  private int distance = 1; //The distance of the node.
 
   /**
    * This constructor ensures that the node always has a valid position and type.
@@ -44,10 +45,11 @@ public class Node {
    * @param x The X coordinate of the node.
    * @param y The Y coordinate of the node.
    */
-  public Node(Types type, int x, int y){
-    this.type = type;
-    this.x = x;
-    this.y = y;
+  public Node(Types type, int x, int y, int cost){
+    setType(type);
+    setX(x);
+    setY(y);
+    setCost(cost);
   }
 
   /**
@@ -198,5 +200,21 @@ public class Node {
    */
   public void setF(int f) {
     F = f;
+  }
+
+  /**
+   * Returns the distance value of the node.
+   * @return The Distance of the node.
+   */
+  public int getDistance() {
+    return distance;
+  }
+
+  /**
+   * Sets the distance value of the node.
+   * @param distance The desired distance value.
+   */
+  public void setDistance(int distance) {
+    this.distance = distance;
   }
 }

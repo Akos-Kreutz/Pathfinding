@@ -12,12 +12,15 @@ However there will be no step by step guides (other than the code documentation)
 
 ### [Breadth First Searching Algorithm](https://en.wikipedia.org/wiki/Breadth-first_search)
 - C#
+- Java
 
 ### [Depth First Searching Algorithm](https://en.wikipedia.org/wiki/Depth-first_search)
 - C#
+- Java
 
 ### [Dijkstra's Shortest Path First algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
 - C#
+- Java
 
 ### [A* Searching Algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm)
 - C#
